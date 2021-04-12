@@ -39,7 +39,7 @@ public class GeneticAlgorithm {
         return listToPass;
     }
 
-    public static Collection<Chromosome> sortingMethod (ArrayList<Chromosome> nextGeneration){
+    public static Collection<Chromosome> sortingMethod (ArrayList<Chromosome> nextGeneration){ //fixme
             Collection<Chromosome> returnCollection = new ArrayList<>();
             Collections.sort(nextGeneration, (o1, o2) -> {
                 int returnvalue = o1.getFitness();
@@ -74,21 +74,22 @@ public class GeneticAlgorithm {
                 nextGeneration.add(child);
             }
 
-            //step 4 mutate 10% and add to next gen pool
-            for (int j = 0; j < nextGeneration.size(); j++)
+            //step 4 mutate 10%(found in mutation method in chromosome) and add to next gen pool
+            for (int j = 0; j < (nextGeneration.size()); j++)
                 nextGeneration.get(i).mutate();
 
             //sort next gen according to fitness
             nextGeneration = (ArrayList<Chromosome>) sortingMethod(nextGeneration);
 
-
             currentGeneration.clear();
-            for (int j = 0; j < 0; j++) {
+            for (int j = 0; j < nextGeneration.size(); j++) {
                 currentGeneration.add(nextGeneration.get(j));
             }
             nextGeneration.clear();
             //clear current population and take top 10 of next gen to replace it as current generation
-
+        }
+        for (Chromosome c : currentGeneration) {
+            System.out.println(c.getFitness());
         }
     }
 }
