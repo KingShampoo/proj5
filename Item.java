@@ -1,6 +1,6 @@
 package com.company;
 
-public class Item  {
+public class Item extends Chromosome {
     private final String name;
     private final double weight;
     private final int value;
