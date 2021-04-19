@@ -1,10 +1,11 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome>{//chromosome IS an arraylist of items
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<Item>();
     //private static long dummy = 0;
 
     private int rng(){
@@ -12,12 +13,25 @@ public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome
         int rng = rand.nextInt(10);
         return rng;
     }
-    public Chromosome(){}
+    public Chromosome( ArrayList<Item> items, int index) {
+        this.items = items;
+        items.get(index).setIncluded(true);
+    }
+
+    public Chromosome( ArrayList<Item> items, ArrayList<Integer> indexList) {
+
+        this.items = items;
+        for (int index:indexList) {
+            items.get(index).setIncluded(true);
+        }
+    }
+
     public Chromosome(ArrayList<Item> items){
 
-        for (int i = 0; i < items.size(); i++) {
-            if (rng() > 5)
+        for (int i = 0; i < items.size(); i++) {//i think the problem starts here #fixme
+            if (rng() > 5) {
                 items.get(i).setIncluded(true);
+            }
             items.get(i).setIncluded(false);
         }
         //add list of items to arraylist
@@ -26,9 +40,10 @@ public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome
         mutate();
     }
 
+    public Chromosome(){}
     //takes an array list and turns it into a chromosome
 
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 

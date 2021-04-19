@@ -39,7 +39,7 @@ public class GeneticAlgorithm {
         return listToPass;
     }
 
-    public static Collection<Chromosome> sortingMethod (ArrayList<Chromosome> nextGeneration){ //fixme
+    public static Collection<Chromosome> sortingMethod (ArrayList<Chromosome> nextGeneration){
             Collection<Chromosome> returnCollection = new ArrayList<>();
             Collections.sort(nextGeneration, (o1, o2) -> {
                 int returnvalue = o1.getFitness();
@@ -54,7 +54,7 @@ public class GeneticAlgorithm {
     public static void main(String[] args) throws FileNotFoundException {
         final String fileName = "C://vm//more_items.txt";
         final int populationSize = 10;
-        final int numberOfEPOCHS = 1000;
+        final int numberOfEPOCHS = 100;
 
         ArrayList<Item> itemList = new ArrayList(readData(fileName));
 
