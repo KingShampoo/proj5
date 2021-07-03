@@ -7,7 +7,7 @@ import java.util.*;
 public class GeneticAlgorithm {
         public static ArrayList<Item> readData(String fileName) throws FileNotFoundException {//reads data file and uses tokens to build an obj (item)
             ArrayList<Item> itemList = new ArrayList<>();
-            final String path = fileName;
+            final String path = fileName; 
             String itemToken;
             double weightToken;
             int valueToken;
@@ -38,58 +38,47 @@ public class GeneticAlgorithm {
         }
         return listToPass;
     }
-
-    public static Collection<Chromosome> sortingMethod (ArrayList<Chromosome> nextGeneration){ //fixme
-            Collection<Chromosome> returnCollection = new ArrayList<>();
-            Collections.sort(nextGeneration, (o1, o2) -> {
-                int returnvalue = o1.getFitness();
-                if (o2.getFitness()> o1.getFitness())//return highest fitness when comparing two
-                    returnvalue = o2.getFitness();
-
-                return returnvalue;
-            });
-            return returnCollection;
-    }
-
+    
     public static void main(String[] args) throws FileNotFoundException {
         final String fileName = "C://vm//more_items.txt";
-        final int populationSize = 10;
+        final int populationSize = 40;//        ---- change path and epochs up here if desired---- 
         final int numberOfEPOCHS = 1000;
 
-        ArrayList<Item> itemList = new ArrayList(readData(fileName));
+        ArrayList<Item> itemList = new ArrayList(readData(fileName));//read in from file to arraylist items
 
-        ArrayList<Chromosome> currentGeneration = initializePopulation(itemList,populationSize); // makes a starting population of int populationSize// start with 10 chromosomes
-        ArrayList<Chromosome> nextGeneration = new ArrayList<>();
+        ArrayList<Chromosome> currentGeneration = initializePopulation(itemList,populationSize); // makes a starting population of int populationSize
+        ArrayList<Chromosome> nextGeneration = new ArrayList<>();//makes empty list to reuse later
 
-        for (int i = 0; i < numberOfEPOCHS; i++) {//iterate how many times
+        for (int i = 0; i < numberOfEPOCHS; i++) {//mutate and shed bad chromozones numberofEPOCHS times
 
-            for (int j = 0; j < currentGeneration.size(); j++)
+            for (int j = 0; j < currentGeneration.size(); j++)// for each chromosome in current gen, add to the next generation
                 nextGeneration.add(currentGeneration.get(j));
             //step 3 create 5 children using crossover, add to next gen population pool
 
             for (int j = 0; j < (currentGeneration.size() / 2); j++) {
-                Chromosome parentA = currentGeneration.get(i);
-                Chromosome parentB = currentGeneration.get(currentGeneration.size()/2+i);
-                Chromosome child = parentA.crossover(parentA, parentB);
+                Chromosome parentA = currentGeneration.get(i);//starts at 0
+                Chromosome parentB = currentGeneration.get(currentGeneration.size()/2+i);// starts in middle 
+                Chromosome child = parentA.crossover(parentB);
                 nextGeneration.add(child);
             }
 
-            //step 4 mutate 10%(found in mutation method in chromosome) and add to next gen pool
+            //step 4 mutate 10% of items in each chromosome and add to next gen 
             for (int j = 0; j < (nextGeneration.size()); j++)
                 nextGeneration.get(i).mutate();
 
             //sort next gen according to fitness
-            nextGeneration = (ArrayList<Chromosome>) sortingMethod(nextGeneration);
-
-            currentGeneration.clear();
+            Collections.sort(nextGeneration);
+            currentGeneration.clear();// wipe current gen and replace with next gen
+            
             for (int j = 0; j < nextGeneration.size(); j++) {
                 currentGeneration.add(nextGeneration.get(j));
             }
-            nextGeneration.clear();
-            //clear current population and take top 10 of next gen to replace it as current generation
+            nextGeneration.clear();//clear next gen and loop
         }
+
         for (Chromosome c : currentGeneration) {
             System.out.println(c.getFitness());
         }
+        System.out.println(currentGeneration.get(0).toString() + "is the best chromosome");
     }
 }

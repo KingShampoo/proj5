@@ -5,97 +5,83 @@ import java.util.Random;
 
 public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome>{//chromosome IS an arraylist of items
     private ArrayList<Item> items = new ArrayList<>();
-    //private static long dummy = 0;
-
+    
     private int rng(){
         Random rand = new Random();
-        int rng = rand.nextInt(10);
+        int rng = rand.nextInt(9);
         return rng;
     }
-    public Chromosome(){}
-    public Chromosome(ArrayList<Item> items){
 
-        for (int i = 0; i < items.size(); i++) {
-            if (rng() > 5)
+    public Chromosome(){}// no arg constructor for crossover method
+
+    public Chromosome(ArrayList<Item> items){//normal chrom constructor
+        for (int i = 0; i < items.size(); i++) {// for each item in the list do 50/50 if it is included or not
+            if (rng() > 4)
                 items.get(i).setIncluded(true);
             items.get(i).setIncluded(false);
         }
-        //add list of items to arraylist
-        //for each item in list 50%chance to trigger included
+        mutate();//everytime the constructor is called, mutate the items list
         this.items = items;
-        mutate();
     }
-
-    //takes an array list and turns it into a chromosome
 
     public ArrayList<Item> getItems() {
         return items;
     }
+    
+    public Chromosome crossover(Chromosome otherParent){
+        Chromosome returnChromosome = new Chromosome();//make new chromosome to return
 
-    public Chromosome crossover(Chromosome parentA,Chromosome parentB){
-        Chromosome returnChromosome = new Chromosome();
-
-        for (int i = 0; i < items.size(); i++) {
-            if (rng()>5)
-                returnChromosome.add(parentA.get(i));
+        for (int i = 0; i < items.size(); i++) {     // foreach item in items, do 5050 to see if it gets this.item or other.item   
+            if (rng()>4)
+                returnChromosome.add(items.get(i));//set item at i to this.item
             else
-            returnChromosome.add(parentB.get(i));
+                returnChromosome.add(otherParent.get(i));//set item at i to other.item
         }
-        //creates a child from 2 chromosomes
-        // 2 chromosomes are this.chromosome and other
-        //use if rng>5 chromosome other gene is passed to child, else this chromosome gene is passed
         return returnChromosome;
     }
 
     public void mutate(){
-        Item token;
         for (int i = 0; i < items.size(); i++) {
-            if (rng()<=1){
-            token = items.get(i);
-            if (token.isIncluded()==true)
-                token.setIncluded(false);
-            }
+            if (rng()==1){// 0-9, so 1 is 10% to proc 
+            items.get(i).setIncluded(!items.get(i).isIncluded());//flip included value
         }
     }
+}
 
     public int getFitness(){
         int weight = 0;
         int value = 0;
-        int fitness;
+        long dummy = 0;
 
-     //   dummy = 0;
-      //  for (int i=0; i<this.size()*1000; i++) {
-      //      dummy += i;
-      //  }
+        for (int i=0; i<this.size()*1000; i++) {// this is to add load to each fitness assessment 
+            dummy += i;
+        }
 
         for (int i = 0; i < items.size(); i++) {
             weight += items.get(i).getWeight();
-        }
-        for (int i = 0; i < items.size(); i++) {
             value += items.get(i).getValue();
         }
 
-        if (weight>10) {
-            fitness = 0;
-        } else {
-            fitness = value;
-        }
-        return fitness;
+        if (weight>=10) {
+            return 0;
+        } else { return value; }
     }
 
-    public int compareTo(Chromosome other){
-        int returnValue  = 0;
+    public int compareTo(Chromosome other){        
         if (this.getFitness()> other.getFitness())
-            returnValue = -1;
+            return -1;
         if (this.getFitness()< other.getFitness())
-            returnValue = 1;
-
-        return returnValue;// return -1 if chromosome A is better than chromosome B, or +1 for the opposite, else 0 for equal chromosomes.
+            return 1;
+        return 0;// return -1 if this.chromosome is better than chromosome other, or +1 for the opposite, else 0 for equal chromosomes.
     }
+
     @Override
     public Item get(int i){
         return items.get(i);
     }
+    @Override
+    public int size(){ return items.size(); }//-------------------------------------------------- i shouldnt need this
+    
     @Override
     public String toString(){
         String printStatement = "The items in this chromosome are: ";
@@ -103,7 +89,7 @@ public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome
             Item itemToPrint = items.get(i);
             printStatement += itemToPrint.toString();
         }
-         return printStatement;
+        return printStatement;
         }
     }
 
