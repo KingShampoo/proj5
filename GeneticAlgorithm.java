@@ -50,7 +50,6 @@ public class GeneticAlgorithm {
         ArrayList<Chromosome> nextGeneration = new ArrayList<>();//makes empty list to reuse later
 
         for (int i = 0; i < numberOfEPOCHS; i++) {//mutate and shed bad chromozones numberofEPOCHS times
-
             for (int j = 0; j < currentGeneration.size(); j++)// for each chromosome in current gen, add to the next generation
                 nextGeneration.add(currentGeneration.get(j));
             //step 3 create 5 children using crossover, add to next gen population pool
@@ -62,7 +61,6 @@ public class GeneticAlgorithm {
                 nextGeneration.add(child);
             }
 
-            //step 4 mutate 10% of items in each chromosome and add to next gen 
             for (int j = 0; j < (nextGeneration.size()); j++)
                 nextGeneration.get(i).mutate();
 
