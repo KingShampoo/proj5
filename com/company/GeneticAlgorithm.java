@@ -39,7 +39,7 @@ public class GeneticAlgorithm {
     }
     
     public static void main(String[] args) throws FileNotFoundException {
-        final String fileName = "C://vm//more_items.txt";
+        final String fileName = "more_items.txt";
         final int populationSize = 100;//        ---- change path and epochs up here if desired----
         final int numberOfEPOCHS = 5000;
 
