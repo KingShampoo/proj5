@@ -78,7 +78,7 @@ public class Chromosome extends ArrayList<Item> implements Comparable<Chromosome
         return items.get(i);
     }
     @Override
-    public int size(){ return items.size(); }//-------------------------------------------------- i shouldnt need this
+    public int size(){ return items.size(); }//-------------------------------------------------- i shouldnt need this //fixme
     
     @Override
     public String toString(){
