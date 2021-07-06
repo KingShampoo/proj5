@@ -1,6 +1,6 @@
 package com.company;
 
-public class Item extends Chromosome {
+public class Item {
     private final String name;
     private final double weight;
     private final int value;
@@ -10,6 +10,13 @@ public class Item extends Chromosome {
         this.name = name;
         this.weight = weight;
         this.value = value;
+    }
+
+    public Item(Item other) {// copy constructor
+        this.name = other.getName();
+        this.weight = other.getWeight();
+        this.value = other.getValue();
+        this.included = other.isIncluded();
     }
 
     public String getName() {
@@ -28,20 +35,9 @@ public class Item extends Chromosome {
         return this.included;
     }
 
-    public void setIncluded(boolean included) {
-        this.included = included;
-    }
+    public void setIncluded(boolean included) { this.included = included; }
 
-    public String toString() {
-        return " " + this.name + " ( " + this.weight + " lbs, $" + this.value + " )";//prints fields n stuff
-    }
-
-    public Item(Item other) {// copy constructor
-        this.name = other.getName();
-        this.weight = other.getWeight();//do i even need this??????
-        this.value = other.getValue();
-        this.included = other.included;
+    public String toString() { return " " + this.name + " ( " + this.weight + " lbs, $" + this.value + " )"; }//       prints " item_name (weight lbs, $value )"
 
 
-    }
 }
