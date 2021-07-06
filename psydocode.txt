@@ -1,4 +1,0 @@
-init file reading stuff
-try block for reading in items
-add items to item list
-
