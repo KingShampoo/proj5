@@ -64,10 +64,6 @@ public class GeneticAlgorithm {
                 if (rand.nextInt(9)==1)//1 in 10 chance
                 nextGeneration.get(j).mutate();
             }
-            for (Chromosome c: nextGeneration) {// added to problem solve, remove later
-                System.out.println(c.getFitness());
-            }
-
             Collections.sort(nextGeneration);//sort next gen according to fitness
             currentGeneration.clear();// wipe current gen to replace with next gen
 
@@ -75,10 +71,7 @@ public class GeneticAlgorithm {
                 currentGeneration.add(nextGeneration.get(j));
             }
             nextGeneration.clear();//clear next gen and loop
-        }
-
-        for (Chromosome c : currentGeneration) { System.out.println(c.getFitness()); }
-
+        }   
         long value = 0;
         for (Item item: currentGeneration.get(0).getItems()) {
             if (item.isIncluded()){
