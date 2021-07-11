@@ -40,9 +40,9 @@ public class GeneticAlgorithm {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        final String fileName = "items.txt";
-        final int populationSize = 10;//        ---- change path + population + epochs up here if desired----
-        final int numberOfEPOCHS = 50;
+        final String fileName = "more_items.txt";
+        final int populationSize = 100;//        ---- change path + population + epochs up here if desired----
+        final int numberOfEPOCHS = 5000;
         Random rand = new Random();
 
         ArrayList<Item> itemList = new ArrayList(readData(fileName));//read in from file to arraylist items
